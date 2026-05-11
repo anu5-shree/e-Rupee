@@ -9,8 +9,44 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SendRouteImport } from './routes/send'
+import { Route as QrRouteImport } from './routes/qr'
+import { Route as OfflineRouteImport } from './routes/offline'
+import { Route as NokiaRouteImport } from './routes/nokia'
+import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as AnalyticsRouteImport } from './routes/analytics'
 import { Route as IndexRouteImport } from './routes/index'
 
+const SendRoute = SendRouteImport.update({
+  id: '/send',
+  path: '/send',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const QrRoute = QrRouteImport.update({
+  id: '/qr',
+  path: '/qr',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OfflineRoute = OfflineRouteImport.update({
+  id: '/offline',
+  path: '/offline',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NokiaRoute = NokiaRouteImport.update({
+  id: '/nokia',
+  path: '/nokia',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AnalyticsRoute = AnalyticsRouteImport.update({
+  id: '/analytics',
+  path: '/analytics',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -19,28 +55,116 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/analytics': typeof AnalyticsRoute
+  '/dashboard': typeof DashboardRoute
+  '/nokia': typeof NokiaRoute
+  '/offline': typeof OfflineRoute
+  '/qr': typeof QrRoute
+  '/send': typeof SendRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/analytics': typeof AnalyticsRoute
+  '/dashboard': typeof DashboardRoute
+  '/nokia': typeof NokiaRoute
+  '/offline': typeof OfflineRoute
+  '/qr': typeof QrRoute
+  '/send': typeof SendRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/analytics': typeof AnalyticsRoute
+  '/dashboard': typeof DashboardRoute
+  '/nokia': typeof NokiaRoute
+  '/offline': typeof OfflineRoute
+  '/qr': typeof QrRoute
+  '/send': typeof SendRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/analytics'
+    | '/dashboard'
+    | '/nokia'
+    | '/offline'
+    | '/qr'
+    | '/send'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/analytics'
+    | '/dashboard'
+    | '/nokia'
+    | '/offline'
+    | '/qr'
+    | '/send'
+  id:
+    | '__root__'
+    | '/'
+    | '/analytics'
+    | '/dashboard'
+    | '/nokia'
+    | '/offline'
+    | '/qr'
+    | '/send'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AnalyticsRoute: typeof AnalyticsRoute
+  DashboardRoute: typeof DashboardRoute
+  NokiaRoute: typeof NokiaRoute
+  OfflineRoute: typeof OfflineRoute
+  QrRoute: typeof QrRoute
+  SendRoute: typeof SendRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/send': {
+      id: '/send'
+      path: '/send'
+      fullPath: '/send'
+      preLoaderRoute: typeof SendRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/qr': {
+      id: '/qr'
+      path: '/qr'
+      fullPath: '/qr'
+      preLoaderRoute: typeof QrRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/offline': {
+      id: '/offline'
+      path: '/offline'
+      fullPath: '/offline'
+      preLoaderRoute: typeof OfflineRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/nokia': {
+      id: '/nokia'
+      path: '/nokia'
+      fullPath: '/nokia'
+      preLoaderRoute: typeof NokiaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/analytics': {
+      id: '/analytics'
+      path: '/analytics'
+      fullPath: '/analytics'
+      preLoaderRoute: typeof AnalyticsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -53,6 +177,12 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AnalyticsRoute: AnalyticsRoute,
+  DashboardRoute: DashboardRoute,
+  NokiaRoute: NokiaRoute,
+  OfflineRoute: OfflineRoute,
+  QrRoute: QrRoute,
+  SendRoute: SendRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
