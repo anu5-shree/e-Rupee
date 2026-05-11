@@ -9,14 +9,28 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WelcomeRouteImport } from './routes/welcome'
+import { Route as SignupRouteImport } from './routes/signup'
 import { Route as SendRouteImport } from './routes/send'
 import { Route as QrRouteImport } from './routes/qr'
+import { Route as ProfileSetupRouteImport } from './routes/profile-setup'
 import { Route as OfflineRouteImport } from './routes/offline'
 import { Route as NokiaRouteImport } from './routes/nokia'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as AnalyticsRouteImport } from './routes/analytics'
 import { Route as IndexRouteImport } from './routes/index'
 
+const WelcomeRoute = WelcomeRouteImport.update({
+  id: '/welcome',
+  path: '/welcome',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SignupRoute = SignupRouteImport.update({
+  id: '/signup',
+  path: '/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SendRoute = SendRouteImport.update({
   id: '/send',
   path: '/send',
@@ -27,6 +41,11 @@ const QrRoute = QrRouteImport.update({
   path: '/qr',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProfileSetupRoute = ProfileSetupRouteImport.update({
+  id: '/profile-setup',
+  path: '/profile-setup',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const OfflineRoute = OfflineRouteImport.update({
   id: '/offline',
   path: '/offline',
@@ -35,6 +54,11 @@ const OfflineRoute = OfflineRouteImport.update({
 const NokiaRoute = NokiaRouteImport.update({
   id: '/nokia',
   path: '/nokia',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DashboardRoute = DashboardRouteImport.update({
@@ -57,29 +81,41 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/analytics': typeof AnalyticsRoute
   '/dashboard': typeof DashboardRoute
+  '/login': typeof LoginRoute
   '/nokia': typeof NokiaRoute
   '/offline': typeof OfflineRoute
+  '/profile-setup': typeof ProfileSetupRoute
   '/qr': typeof QrRoute
   '/send': typeof SendRoute
+  '/signup': typeof SignupRoute
+  '/welcome': typeof WelcomeRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/analytics': typeof AnalyticsRoute
   '/dashboard': typeof DashboardRoute
+  '/login': typeof LoginRoute
   '/nokia': typeof NokiaRoute
   '/offline': typeof OfflineRoute
+  '/profile-setup': typeof ProfileSetupRoute
   '/qr': typeof QrRoute
   '/send': typeof SendRoute
+  '/signup': typeof SignupRoute
+  '/welcome': typeof WelcomeRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/analytics': typeof AnalyticsRoute
   '/dashboard': typeof DashboardRoute
+  '/login': typeof LoginRoute
   '/nokia': typeof NokiaRoute
   '/offline': typeof OfflineRoute
+  '/profile-setup': typeof ProfileSetupRoute
   '/qr': typeof QrRoute
   '/send': typeof SendRoute
+  '/signup': typeof SignupRoute
+  '/welcome': typeof WelcomeRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -87,42 +123,72 @@ export interface FileRouteTypes {
     | '/'
     | '/analytics'
     | '/dashboard'
+    | '/login'
     | '/nokia'
     | '/offline'
+    | '/profile-setup'
     | '/qr'
     | '/send'
+    | '/signup'
+    | '/welcome'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/analytics'
     | '/dashboard'
+    | '/login'
     | '/nokia'
     | '/offline'
+    | '/profile-setup'
     | '/qr'
     | '/send'
+    | '/signup'
+    | '/welcome'
   id:
     | '__root__'
     | '/'
     | '/analytics'
     | '/dashboard'
+    | '/login'
     | '/nokia'
     | '/offline'
+    | '/profile-setup'
     | '/qr'
     | '/send'
+    | '/signup'
+    | '/welcome'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AnalyticsRoute: typeof AnalyticsRoute
   DashboardRoute: typeof DashboardRoute
+  LoginRoute: typeof LoginRoute
   NokiaRoute: typeof NokiaRoute
   OfflineRoute: typeof OfflineRoute
+  ProfileSetupRoute: typeof ProfileSetupRoute
   QrRoute: typeof QrRoute
   SendRoute: typeof SendRoute
+  SignupRoute: typeof SignupRoute
+  WelcomeRoute: typeof WelcomeRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/welcome': {
+      id: '/welcome'
+      path: '/welcome'
+      fullPath: '/welcome'
+      preLoaderRoute: typeof WelcomeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/signup': {
+      id: '/signup'
+      path: '/signup'
+      fullPath: '/signup'
+      preLoaderRoute: typeof SignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/send': {
       id: '/send'
       path: '/send'
@@ -137,6 +203,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof QrRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/profile-setup': {
+      id: '/profile-setup'
+      path: '/profile-setup'
+      fullPath: '/profile-setup'
+      preLoaderRoute: typeof ProfileSetupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/offline': {
       id: '/offline'
       path: '/offline'
@@ -149,6 +222,13 @@ declare module '@tanstack/react-router' {
       path: '/nokia'
       fullPath: '/nokia'
       preLoaderRoute: typeof NokiaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/dashboard': {
@@ -179,10 +259,14 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AnalyticsRoute: AnalyticsRoute,
   DashboardRoute: DashboardRoute,
+  LoginRoute: LoginRoute,
   NokiaRoute: NokiaRoute,
   OfflineRoute: OfflineRoute,
+  ProfileSetupRoute: ProfileSetupRoute,
   QrRoute: QrRoute,
   SendRoute: SendRoute,
+  SignupRoute: SignupRoute,
+  WelcomeRoute: WelcomeRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
