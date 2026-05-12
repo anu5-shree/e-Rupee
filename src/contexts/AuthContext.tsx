@@ -56,6 +56,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return () => subscription.unsubscribe();
   }, []);
 
+  // Realtime balance updates
+  useEffect(() => {
+    if (!user) return;
+    const ch = supabase
+      .channel(`profile:${user.id}`)
+      .on("postgres_changes", { event: "UPDATE", schema: "public", table: "profiles", filter: `id=eq.${user.id}` },
+        (payload) => setProfile(payload.new as Profile))
+      .subscribe();
+    return () => { supabase.removeChannel(ch); };
+  }, [user]);
+
   const signIn = async (email: string, password: string) => {
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     return { error: error?.message ?? null };
