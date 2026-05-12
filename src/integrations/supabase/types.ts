@@ -14,6 +14,42 @@ export type Database = {
   }
   public: {
     Tables: {
+      offline_transfers: {
+        Row: {
+          amount: number
+          created_at: string
+          id: string
+          note: string | null
+          receiver_name: string | null
+          receiver_phone: string
+          status: string
+          synced_at: string | null
+          user_id: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          id?: string
+          note?: string | null
+          receiver_name?: string | null
+          receiver_phone: string
+          status?: string
+          synced_at?: string | null
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          id?: string
+          note?: string | null
+          receiver_name?: string | null
+          receiver_phone?: string
+          status?: string
+          synced_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -82,7 +118,14 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      load_erupee: {
+        Args: { _amount: number; _source?: string }
+        Returns: Json
+      }
+      transfer_erupee: {
+        Args: { _amount: number; _note?: string; _receiver_phone: string }
+        Returns: Json
+      }
     }
     Enums: {
       [_ in never]: never

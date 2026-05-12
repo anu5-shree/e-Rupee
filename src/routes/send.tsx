@@ -1,19 +1,25 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { Header } from "@/components/Header";
 import { useState } from "react";
-import { CheckCircle2, User } from "lucide-react";
+import { CheckCircle2, User, Loader2 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/contexts/AuthContext";
+import { RequireAuth } from "@/components/RequireAuth";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/send")({
   head: () => ({ meta: [{ title: "Send Money — e₹ Connect" }] }),
-  component: Send,
+  component: () => <RequireAuth><Send /></RequireAuth>,
 });
 
 function Send() {
+  const { refreshProfile } = useAuth();
   const [phone, setPhone] = useState("");
   const [amount, setAmount] = useState("");
   const [note, setNote] = useState("");
   const [confirm, setConfirm] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const navigate = useNavigate();
 
   const valid = phone.length >= 10 && Number(amount) > 0;
@@ -92,8 +98,29 @@ function Send() {
               <Row k="Fee" v="₹0.00" />
             </div>
             <div className="mt-6 grid grid-cols-2 gap-3">
-              <button onClick={() => setConfirm(false)} className="rounded-2xl bg-secondary py-3 font-medium">Cancel</button>
-              <button onClick={() => setSuccess(true)} className="rounded-2xl gradient-primary text-primary-foreground py-3 font-semibold">Confirm</button>
+              <button onClick={() => setConfirm(false)} disabled={submitting} className="rounded-2xl bg-secondary py-3 font-medium">Cancel</button>
+              <button
+                disabled={submitting}
+                onClick={async () => {
+                  setSubmitting(true);
+                  const { data, error } = await supabase.rpc("transfer_erupee", {
+                    _receiver_phone: phone,
+                    _amount: Number(amount),
+                    _note: note || undefined,
+                  });
+                  setSubmitting(false);
+                  if (error) { toast.error(error.message); return; }
+                  await refreshProfile();
+                  if (data && typeof data === "object" && "receiver_found" in (data as any) && !(data as any).receiver_found) {
+                    toast.message("Sent — receiver not yet on e₹ Connect; held in escrow.");
+                  }
+                  setSuccess(true);
+                }}
+                className="rounded-2xl gradient-primary text-primary-foreground py-3 font-semibold flex items-center justify-center gap-2"
+              >
+                {submitting && <Loader2 className="h-4 w-4 animate-spin" />}
+                {submitting ? "Processing" : "Confirm"}
+              </button>
             </div>
           </div>
         </div>

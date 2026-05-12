@@ -17,6 +17,7 @@ import { Route as ProfileSetupRouteImport } from './routes/profile-setup'
 import { Route as OfflineRouteImport } from './routes/offline'
 import { Route as NokiaRouteImport } from './routes/nokia'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as LoadRouteImport } from './routes/load'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as AnalyticsRouteImport } from './routes/analytics'
 import { Route as IndexRouteImport } from './routes/index'
@@ -61,6 +62,11 @@ const LoginRoute = LoginRouteImport.update({
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LoadRoute = LoadRouteImport.update({
+  id: '/load',
+  path: '/load',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DashboardRoute = DashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -81,6 +87,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/analytics': typeof AnalyticsRoute
   '/dashboard': typeof DashboardRoute
+  '/load': typeof LoadRoute
   '/login': typeof LoginRoute
   '/nokia': typeof NokiaRoute
   '/offline': typeof OfflineRoute
@@ -94,6 +101,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/analytics': typeof AnalyticsRoute
   '/dashboard': typeof DashboardRoute
+  '/load': typeof LoadRoute
   '/login': typeof LoginRoute
   '/nokia': typeof NokiaRoute
   '/offline': typeof OfflineRoute
@@ -108,6 +116,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/analytics': typeof AnalyticsRoute
   '/dashboard': typeof DashboardRoute
+  '/load': typeof LoadRoute
   '/login': typeof LoginRoute
   '/nokia': typeof NokiaRoute
   '/offline': typeof OfflineRoute
@@ -123,6 +132,7 @@ export interface FileRouteTypes {
     | '/'
     | '/analytics'
     | '/dashboard'
+    | '/load'
     | '/login'
     | '/nokia'
     | '/offline'
@@ -136,6 +146,7 @@ export interface FileRouteTypes {
     | '/'
     | '/analytics'
     | '/dashboard'
+    | '/load'
     | '/login'
     | '/nokia'
     | '/offline'
@@ -149,6 +160,7 @@ export interface FileRouteTypes {
     | '/'
     | '/analytics'
     | '/dashboard'
+    | '/load'
     | '/login'
     | '/nokia'
     | '/offline'
@@ -163,6 +175,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AnalyticsRoute: typeof AnalyticsRoute
   DashboardRoute: typeof DashboardRoute
+  LoadRoute: typeof LoadRoute
   LoginRoute: typeof LoginRoute
   NokiaRoute: typeof NokiaRoute
   OfflineRoute: typeof OfflineRoute
@@ -231,6 +244,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/load': {
+      id: '/load'
+      path: '/load'
+      fullPath: '/load'
+      preLoaderRoute: typeof LoadRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/dashboard': {
       id: '/dashboard'
       path: '/dashboard'
@@ -259,6 +279,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AnalyticsRoute: AnalyticsRoute,
   DashboardRoute: DashboardRoute,
+  LoadRoute: LoadRoute,
   LoginRoute: LoginRoute,
   NokiaRoute: NokiaRoute,
   OfflineRoute: OfflineRoute,
