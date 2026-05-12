@@ -1,19 +1,25 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { Header } from "@/components/Header";
 import { useState } from "react";
-import { CheckCircle2, User } from "lucide-react";
+import { CheckCircle2, User, Loader2 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/contexts/AuthContext";
+import { RequireAuth } from "@/components/RequireAuth";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/send")({
   head: () => ({ meta: [{ title: "Send Money — e₹ Connect" }] }),
-  component: Send,
+  component: () => <RequireAuth><Send /></RequireAuth>,
 });
 
 function Send() {
+  const { profile, refreshProfile } = useAuth();
   const [phone, setPhone] = useState("");
   const [amount, setAmount] = useState("");
   const [note, setNote] = useState("");
   const [confirm, setConfirm] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const navigate = useNavigate();
 
   const valid = phone.length >= 10 && Number(amount) > 0;
