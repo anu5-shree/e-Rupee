@@ -106,7 +106,7 @@ function Send() {
                   const { data, error } = await supabase.rpc("transfer_erupee", {
                     _receiver_phone: phone,
                     _amount: Number(amount),
-                    _note: note || null,
+                    _note: note || undefined,
                   });
                   setSubmitting(false);
                   if (error) { toast.error(error.message); return; }
