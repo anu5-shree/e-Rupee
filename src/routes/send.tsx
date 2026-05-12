@@ -13,7 +13,7 @@ export const Route = createFileRoute("/send")({
 });
 
 function Send() {
-  const { profile, refreshProfile } = useAuth();
+  const { refreshProfile } = useAuth();
   const [phone, setPhone] = useState("");
   const [amount, setAmount] = useState("");
   const [note, setNote] = useState("");
