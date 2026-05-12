@@ -96,7 +96,7 @@ function Dashboard() {
                 </button>
               </div>
             </div>
-            <Link to="/profile-setup" className="rounded-xl glass px-3 py-2 text-xs flex items-center gap-1">
+            <Link to="/load" className="rounded-xl glass px-3 py-2 text-xs flex items-center gap-1">
               <Plus className="h-3 w-3" /> Top up
             </Link>
           </div>
