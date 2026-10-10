@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">e₹ Connect</string>
+    <string name="title_activity_main">e₹ Connect</string>
+    <string name="package_name">com.erupee.connect</string>
+    <string name="custom_url_scheme">com.erupee.connect</string>
+</resources>
